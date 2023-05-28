@@ -3,7 +3,7 @@
 
 ## Breve resumo 
 
-### Este pset tem como objetivo mostrar documentar e mostrar toda a execução durante o seu processo de criação. Ele é focado em melhorar, avaliar e aprimora os conhecimentos referentes a lingauegm SQL e Banco  de Dados Relacionais por meio da execução de um modelo relacional em um SGBD de questões discursivas.
+* Este pset tem como objetivo mostrar documentar e mostrar toda a execução durante o seu processo de criação. Ele é focado em melhorar, avaliar e aprimora os conhecimentos referentes a lingauegm SQL e Banco  de Dados Relacionais por meio da execução de um modelo relacional em um SGBD de questões discursivas.
 
 ## Git e Github
 
