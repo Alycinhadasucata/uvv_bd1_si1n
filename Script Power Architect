@@ -1,0 +1,194 @@
+
+CREATE TABLE public.produtos (
+                produto_id NUMERIC(38) NOT NULL,
+                nome VARCHAR(255),
+                preco_unitario NUMERIC(10,2),
+                detalhes BYTEA,
+                imagem BYTEA,
+                imagem_mime_type VARCHAR(512),
+                imagem_arquivo VARCHAR(512),
+                imagem_charset VARCHAR(512),
+                imagem_ultima_atualizacao DATE,
+                CONSTRAINT pk_pprodutos PRIMARY KEY (produto_id)
+);
+COMMENT ON TABLE public.produtos IS 'Tabela que contem informacoes referente aos produtos 
+';
+COMMENT ON COLUMN public.produtos.produto_id IS 'pk da tabela produtos ';
+COMMENT ON COLUMN public.produtos.nome IS 'nome da tabela produtos ';
+COMMENT ON COLUMN public.produtos.preco_unitario IS 'preco unitario da tabela produtos';
+COMMENT ON COLUMN public.produtos.detalhes IS 'detalhes da tabela produtos ';
+COMMENT ON COLUMN public.produtos.imagem IS 'imagem da tabela produtos';
+COMMENT ON COLUMN public.produtos.imagem_mime_type IS 'imagem mime type da tabela produtos ';
+COMMENT ON COLUMN public.produtos.imagem_arquivo IS 'imagem arquivo da tabela produtos ';
+COMMENT ON COLUMN public.produtos.imagem_charset IS 'imagem charset da tabela produtos ';
+COMMENT ON COLUMN public.produtos.imagem_ultima_atualizacao IS 'imagem ultima atualizacao';
+
+
+CREATE TABLE public.lojas (
+                loja_id NUMERIC(38) NOT NULL,
+                nome VARCHAR(255),
+                endereco_web VARCHAR(100),
+                endereco_fisico VARCHAR(512),
+                latitude NUMERIC,
+                longitude  NUMERIC,
+                logo BYTEA,
+                logo_mime_type VARCHAR(512),
+                logo_arquivo VARCHAR(512),
+                logo charset  VARCHAR(512),
+                logo_ultima_atualizacao DATE,
+                CONSTRAINT pk_lojas PRIMARY KEY (loja_id)
+);
+COMMENT ON TABLE public.lojas IS 'Tabela que contem informacoes referente a loja ';
+COMMENT ON COLUMN public.lojas.loja_id IS 'id da loja da tabela lojas ';
+COMMENT ON COLUMN public.lojas.nome IS 'nome da tabela lojas ';
+COMMENT ON COLUMN public.lojas.endereco_web IS 'endereco web da tabela lojas ';
+COMMENT ON COLUMN public.lojas.endereco_fisico IS 'endereco fisico da tabela lojas ';
+COMMENT ON COLUMN public.lojas.latitude IS 'latitude da tabela lojas ';
+COMMENT ON COLUMN public.lojas.longitude  IS 'longitude da tabela lojas ';
+COMMENT ON COLUMN public.lojas.logo IS 'logo da tabela lojas ';
+COMMENT ON COLUMN public.lojas.logo_mime_type IS 'logo mime type da tabela lojas ';
+COMMENT ON COLUMN public.lojas.logo_arquivo IS 'logo arquivo da tabela lojas ';
+COMMENT ON COLUMN public.lojas.logo charset  IS 'logo charset da tabela lojas ';
+COMMENT ON COLUMN public.lojas.logo_ultima_atualizacao IS 'logo ultima atualizacao da tabela lojas ';
+
+
+CREATE TABLE public.estoques (
+                estoque_id NUMERIC(38) NOT NULL,
+                loja_id NUMERIC(38),
+                produto_id NUMERIC(38),
+                quantidade NUMERIC(38),
+                CONSTRAINT pk_estoques PRIMARY KEY (estoque_id)
+);
+COMMENT ON TABLE public.estoques IS 'Tabela teferente as informacoes estoques';
+COMMENT ON COLUMN public.estoques.estoque_id IS 'estoque id da tabela estoques ';
+COMMENT ON COLUMN public.estoques.loja_id IS 'loja id da tabela estoques ';
+COMMENT ON COLUMN public.estoques.produto_id IS 'produto id da tabela estoques ';
+COMMENT ON COLUMN public.estoques.quantidade IS 'quantidade id da tabela estoques ';
+
+
+CREATE TABLE public.clientes (
+                cliente_id NUMERIC(38) NOT NULL,
+                email VARCHAR(255),
+                nome VARCHAR(255),
+                telefone1 VARCHAR(20),
+                telefone2 VARCHAR(20),
+                telefone3 VARCHAR(20),
+                CONSTRAINT pk_clientes PRIMARY KEY (cliente_id)
+);
+COMMENT ON TABLE public.clientes IS 'Tabela clientes que contêm dados básicos dos mesmos 
+';
+COMMENT ON COLUMN public.clientes.cliente_id IS 'pk da tabela clientes 
+';
+COMMENT ON COLUMN public.clientes.email IS 'email da tabela clientes ';
+COMMENT ON COLUMN public.clientes.nome IS 'nome da tabela clientes ';
+COMMENT ON COLUMN public.clientes.telefone1 IS 'telefone1 da tabela clientes ';
+COMMENT ON COLUMN public.clientes.telefone2 IS 'telefone2 da tabela clientes';
+COMMENT ON COLUMN public.clientes.telefone3 IS 'telefone3 da tabela clientes ';
+
+
+CREATE TABLE public.envios (
+                envio_id NUMERIC(38) NOT NULL,
+                loja_id NUMERIC(38),
+                cliente_id NUMERIC(38),
+                endereco_entrega VARCHAR(512),
+                status VARCHAR(15),
+                CONSTRAINT pk_envios PRIMARY KEY (envio_id)
+);
+COMMENT ON TABLE public.envios IS 'Tabela que contem informacoes refetentes aos envios 
+';
+COMMENT ON COLUMN public.envios.envio_id IS 'envio id da tabela envios';
+COMMENT ON COLUMN public.envios.loja_id IS 'loja id da tabela envios';
+COMMENT ON COLUMN public.envios.cliente_id IS 'cliente id da tabela envios';
+COMMENT ON COLUMN public.envios.endereco_entrega IS 'endereco enttrega da tabela envios ';
+COMMENT ON COLUMN public.envios.status IS 'status da tabela envios';
+
+
+CREATE TABLE public.pedidos (
+                pedido_id NUMERIC(38) NOT NULL,
+                data_hora TIMESTAMP,
+                cliente_id NUMERIC(38),
+                status VARCHAR(15),
+                loja_id NUMERIC(38),
+                CONSTRAINT pk_pedidos PRIMARY KEY (pedido_id)
+);
+COMMENT ON TABLE public.pedidos IS 'Tabela que contem informacoes dos pedidos ';
+COMMENT ON COLUMN public.pedidos.pedido_id IS 'id do pedido da tabela pedidos ';
+COMMENT ON COLUMN public.pedidos.data_hora IS 'data hora da tabbela pedidos ';
+COMMENT ON COLUMN public.pedidos.cliente_id IS 'cliente id da tabela pedidos ';
+COMMENT ON COLUMN public.pedidos.status IS 'status da tabela pedidos ';
+COMMENT ON COLUMN public.pedidos.loja_id IS 'loja id da tabela pedidos';
+
+
+CREATE TABLE public.pedidos_itens (
+                pedido_id NUMERIC(38) NOT NULL,
+                produto_id NUMERIC(38) NOT NULL,
+                numero_da_linha NUMERIC(38),
+                preco_unitario NUMERIC(10,2),
+                quantidade NUMERIC(38),
+                envio_id NUMERIC(38),
+                CONSTRAINT pk_pedidos_itens PRIMARY KEY (pedido_id, produto_id)
+);
+COMMENT ON TABLE public.pedidos_itens IS 'Tabela que contem as informacoes relacionadas aos pedidos de itens ';
+COMMENT ON COLUMN public.pedidos_itens.pedido_id IS 'pedido id da tabela pedido itens ';
+COMMENT ON COLUMN public.pedidos_itens.produto_id IS 'produto id da tabela pedidos itens';
+COMMENT ON COLUMN public.pedidos_itens.numero_da_linha IS 'numero da linnha da tabela pedidos itens  ';
+COMMENT ON COLUMN public.pedidos_itens.preco_unitario IS 'preco unitario da tabela pedidos itens';
+COMMENT ON COLUMN public.pedidos_itens.quantidade IS 'quantidade da tabela pedidos itens';
+COMMENT ON COLUMN public.pedidos_itens.envio_id IS 'envio id da tabela pedidos itens ';
+
+
+ALTER TABLE public.estoques ADD CONSTRAINT produtos_estoques_fk
+FOREIGN KEY (produto_id)
+REFERENCES public.produtos (produto_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.pedidos_itens ADD CONSTRAINT produtos_pedidos_itens_fk
+FOREIGN KEY (produto_id)
+REFERENCES public.produtos (produto_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.pedidos ADD CONSTRAINT lojas_pedidos_fk
+FOREIGN KEY (loja_id)
+REFERENCES public.lojas (loja_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.estoques ADD CONSTRAINT lojas_estoques_fk
+FOREIGN KEY (loja_id)
+REFERENCES public.lojas (loja_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.envios ADD CONSTRAINT lojas_envios_fk
+FOREIGN KEY (loja_id)
+REFERENCES public.lojas (loja_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.pedidos ADD CONSTRAINT clientes_pedidos_fk
+FOREIGN KEY (cliente_id)
+REFERENCES public.clientes (cliente_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.envios ADD CONSTRAINT clientes_envios_fk
+FOREIGN KEY (cliente_id)
+REFERENCES public.clientes (cliente_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.pedidos_itens ADD CONSTRAINT pedidos_pedidos_itens_fk
+FOREIGN KEY (pedido_id)
+REFERENCES public.pedidos (pedido_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
